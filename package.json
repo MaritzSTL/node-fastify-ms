@@ -1,0 +1,19 @@
+{
+  "name": "node-fastify-ms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "fastify": "^2.12.1",
+    "fastify-file-upload": "^2.0.1",
+    "mongoose": "^5.9.3"
+  }
+}
