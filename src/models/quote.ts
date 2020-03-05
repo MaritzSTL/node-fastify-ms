@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const quoteSchema = new mongoose.Schema({
   text: { type: String, required: true },
@@ -6,4 +6,4 @@ const quoteSchema = new mongoose.Schema({
   avatarUrl: String
 });
 
-module.exports = mongoose.model("Quote", quoteSchema);
+export default mongoose.model("Quote", quoteSchema);
