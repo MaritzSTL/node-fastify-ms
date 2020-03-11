@@ -9,7 +9,14 @@
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": ["./src/types", "node_modules/@types"]
   },
-  "exclude": ["node_modules", "**/*.spec.ts", "test", "jest.config.js"]
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "test",
+    "jest.config.js",
+    "./src/types"
+  ]
 }
