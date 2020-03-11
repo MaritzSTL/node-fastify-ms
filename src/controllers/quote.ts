@@ -1,10 +1,8 @@
 import Quote from "../models/quote";
-import { Document } from 'mongoose';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { ServerResponse } from "http";
 
 export const fetchQuotes = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
-  console.log("YOLO ", req)
   try {
     const quotes = await Quote.find({});
     return quotes;
@@ -54,16 +52,16 @@ export const deleteQuote = async (req: FastifyRequest, reply: FastifyReply<Serve
   }
 };
 
-// export const uploadAvatar = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
-//   const files = req.raw.files;
-//   console.log(files);
-//   let fileArr = [];
-//   for (let key in files) {
-//     fileArr.push({
-//       name: files[key].name,
-//       mimetype: files[key].mimetype
-//     });
-//   }
-//   console.log(fileArr[0].name);
-//   reply.send(fileArr);
-// };
+export const uploadAvatar = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
+  const files = (req.raw as any).files;
+  console.log(files);
+  let fileArr = [];
+  for (let key in files) {
+    fileArr.push({
+      name: files[key].name,
+      mimetype: files[key].mimetype
+    });
+  }
+  console.log(fileArr[0].name);
+  reply.send(fileArr);
+};

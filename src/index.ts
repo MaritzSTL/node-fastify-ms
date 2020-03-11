@@ -1,10 +1,13 @@
 import * as fastify from 'fastify';
+import fileUpload from 'fastify-file-upload';
 import mongoose from 'mongoose';
 import routes from './routes';
 import { config } from './config';
 const env = process.env.NODE_ENV;
 
 const app = fastify.default({ logger: true });
+
+app.register(fileUpload);
 
 routes.forEach(route => { app.route(route) });
 

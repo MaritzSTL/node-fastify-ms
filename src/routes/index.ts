@@ -22,18 +22,19 @@ const updateQuoteRoute: RouteOptions = {
   url: "/api/quotes/:id",
   handler: quotesController.updateQuote
 };
+
 const deleteQuoteRoute: RouteOptions = {
   method: "DELETE",
   url: "/api/quotes/:id",
   handler: quotesController.deleteQuote
 };
 
-const routes = [addQuoteRoute, fetchQuotesRoute, fetchQuoteByIdRoute, updateQuoteRoute, deleteQuoteRoute];
+const uploadAvatarRoute: RouteOptions = {
+  method: "POST",
+  url: "/api/upload",
+  handler: quotesController.uploadAvatar
+}
+
+const routes = [addQuoteRoute, fetchQuotesRoute, fetchQuoteByIdRoute, updateQuoteRoute, deleteQuoteRoute, uploadAvatarRoute];
 
 export default routes;
-
-// {
-//   method: "POST",
-//   url: "/api/avatar",
-//   handler: uploadAvatar
-// }
