@@ -7,4 +7,7 @@ export const config = {
     port: 27017,
     name: 'quotesdb',
   },
+  aws: {
+
+  }
 };

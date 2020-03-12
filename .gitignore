@@ -6,3 +6,4 @@ docs/typedoc
 yarn-error.log
 coverage
 .idea
+src/config.ts
