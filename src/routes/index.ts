@@ -1,4 +1,5 @@
 import * as quotesController from "../controllers/quote";
+import * as uploadsController from "../controllers/upload";
 import { RouteOptions } from 'fastify';
 
 const addQuoteRoute: RouteOptions = {
@@ -32,7 +33,7 @@ const deleteQuoteRoute: RouteOptions = {
 const uploadAvatarRoute: RouteOptions = {
   method: "POST",
   url: "/api/upload",
-  handler: quotesController.uploadAvatar
+  handler: uploadsController.uploadAvatar
 }
 
 const routes = [addQuoteRoute, fetchQuotesRoute, fetchQuoteByIdRoute, updateQuoteRoute, deleteQuoteRoute, uploadAvatarRoute];

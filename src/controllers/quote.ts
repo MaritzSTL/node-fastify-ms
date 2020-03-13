@@ -1,5 +1,5 @@
 import Quote from "../models/quote";
-import { FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyRequest, FastifyReply, FastifyContext } from 'fastify';
 import { ServerResponse } from "http";
 
 export const fetchQuotes = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
@@ -50,18 +50,4 @@ export const deleteQuote = async (req: FastifyRequest, reply: FastifyReply<Serve
   } catch (err) {
     console.log(err);
   }
-};
-
-export const uploadAvatar = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
-  const files = (req.raw as any).files;
-  console.log(files);
-  let fileArr = [];
-  for (let key in files) {
-    fileArr.push({
-      name: files[key].name,
-      mimetype: files[key].mimetype
-    });
-  }
-  console.log(fileArr[0].name);
-  reply.send(fileArr);
 };
