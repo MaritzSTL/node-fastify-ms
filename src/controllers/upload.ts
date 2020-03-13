@@ -1,41 +1,30 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyRequest, FastifyReply } from "fastify";
 import { ServerResponse } from "http";
-import AWS from 'aws-sdk';
-import { config } from '../config';
+import AWS from "aws-sdk";
+import { config } from "../config";
 
 const s3 = new AWS.S3({
   accessKeyId: config.aws.accessKeyId,
-  secretAccessKey: config.aws.secretAccessKey
-})
+  secretAccessKey: config.aws.secretAccessKey,
+});
 
 export const uploadAvatar = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
-  const file = (req.raw as any).files['file'];
-  // console.log(files['file']);
-  // let fileArr = [];
-  // for (let key in files) {
-  //   fileArr.push({
-  //     name: files[key].name,
-  //     mimetype: files[key].mimetype
-  //   });
-  // }
-  // console.log(fileArr[0].name);
-  // reply.send(fileArr);
-
-  const tenantId: string = 'nh-001234';
-  const collection: string = 'yolo';
-  const data = Buffer.from(file.data, 'binary');
+  const file = (req.raw as any).files["file"];
+  const { tenantId, collection } = req.body;
+  const data = Buffer.from(file.data, "binary");
   const fileName: string = file.name;
-  const key: string = `dam/upload/${collection}/${tenantId}/${fileName}`;
+  const mimeType: string = file.mimetype;
+  const key = `dam/upload/${collection}/${tenantId}/${fileName}`;
 
-  let params = {
+  const params = {
     Body: data,
     Bucket: config.aws.bucket,
-    ContentType: 'application/pdf',
+    ContentType: mimeType,
     Key: key,
-    ACL: "public-read" // TODO: Remove/Update for prod
-  }
+    ACL: "public-read", // TODO: Remove/Update for prod
+  };
 
-  s3.getSignedUrl('putObject', params, (err, url) => reply.send({ key, url }))
+  s3.getSignedUrl("putObject", params, (err, url) => reply.send({ key, url }));
 
   s3.upload(params, function (err: Error, res: any) {
     if (err) {
@@ -47,7 +36,4 @@ export const uploadAvatar = async (req: FastifyRequest, reply: FastifyReply<Serv
       console.log("Successfully uploaded data ", res);
     }
   });
-
-
-
 };

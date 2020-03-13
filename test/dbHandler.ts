@@ -6,7 +6,7 @@ const mongod = new MongoMemoryServer();
 
 export const connect = async (): Promise<void> => {
   const uri = await mongod.getConnectionString();
-
+  console.log("URI ", uri)
   const mongooseOpts = {
     useNewUrlParser: true,
     autoReconnect: true,
