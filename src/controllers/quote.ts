@@ -2,7 +2,7 @@ import Quote from "../models/quote";
 import { FastifyRequest, FastifyReply, FastifyContext } from "fastify";
 import { ServerResponse } from "http";
 
-export const fetchQuotes = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
+export const index = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
 	try {
 		const quotes = await Quote.find({});
 		return quotes;
@@ -11,7 +11,7 @@ export const fetchQuotes = async (req: FastifyRequest, reply: FastifyReply<Serve
 	}
 };
 
-export const fetchQuoteById = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
+export const show = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
 	try {
 		const quote = await Quote.findOne({ _id: req.params.id });
 		return quote;
@@ -20,7 +20,7 @@ export const fetchQuoteById = async (req: FastifyRequest, reply: FastifyReply<Se
 	}
 };
 
-export const addQuote = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
+export const create = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
 	try {
 		const quote = new Quote({ ...req.body });
 		return quote.save();
@@ -29,7 +29,7 @@ export const addQuote = async (req: FastifyRequest, reply: FastifyReply<ServerRe
 	}
 };
 
-export const updateQuote = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
+export const update = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
 	try {
 		const { id } = req.params;
 		const quote = req.body;
@@ -42,7 +42,7 @@ export const updateQuote = async (req: FastifyRequest, reply: FastifyReply<Serve
 	}
 };
 
-export const deleteQuote = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
+export const destroy = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
 	try {
 		const { id } = req.params;
 		const quote = await Quote.findOneAndDelete({ _id: id });
