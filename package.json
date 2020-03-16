@@ -30,7 +30,8 @@
     "fastify": "^2.12.1",
     "fastify-file-upload": "^2.0.1",
     "mongodb-memory-server": "^6.3.2",
-    "mongoose": "^5.9.3"
+    "mongoose": "^5.9.3",
+    "newrelic": "^6.4.2"
   },
   "devDependencies": {
     "@types/jest": "^25.1.3",
