@@ -13,13 +13,14 @@ const storage = new Storage({
 const filename = path.join(__dirname, './file.txt');
 export const uploadGcs = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
   try {
-    // const file = (req.raw as any).files["file"];
+    const file = (req.raw as any).files["file"];
     const myBucket = storage.bucket(config.gcp.bucket);
-
-    await myBucket.file(filename).createWriteStream({
+    console.log(file)
+    await myBucket.file(file.name).createWriteStream({
       resumable: false,
       gzip: true
     })
+    reply.send("Upload successful")
 
     // await new Promise(res, )
 
