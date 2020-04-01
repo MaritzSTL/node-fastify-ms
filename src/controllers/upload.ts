@@ -4,59 +4,32 @@ import { ServerResponse } from "http";
 import AWS from "aws-sdk";
 import { Storage } from "@google-cloud/storage";
 import { config } from "../config";
-import { createReadStream } from "fs";
 
 const storage = new Storage({
   keyFilename: path.join(__dirname, '../../4d3e68bfea30.json'),
   projectId: 'mms-sandbox'
 });
-const filename = path.join(__dirname, './file.txt');
 export const uploadGcs = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
-  try {
-    const file = (req.raw as any).files["file"];
-    const myBucket = storage.bucket(config.gcp.bucket);
-    console.log(file)
-    await myBucket.file(file.name).createWriteStream({
-      resumable: false,
-      gzip: true
-    })
-    reply.send("Upload successful")
 
-    // await new Promise(res, )
+  const filename = path.join(__dirname, './file2.txt');
+  const myBucket = config.gcp.bucket;
 
-    // console.log(myBucket)
-    // Makes an authenticated API request.
-    // const results = await storage.getBuckets();
+  await storage.bucket(myBucket).upload(filename, {
+    // Support for HTTP requests made with `Accept-Encoding: gzip`
+    gzip: true,
+    // By setting the option `destination`, you can change the name of the
+    // object you are uploading to a bucket.
+    metadata: {
+      // Enable long-lived HTTP caching headers
+      // Use only if the contents of the file will never change
+      // (If the contents will change, use cacheControl: 'no-cache')
+      cacheControl: 'public, max-age=31536000',
+    },
+  });
 
-    // const [buckets] = results;
+  console.log(`${filename} uploaded to ${myBucket}.`);
 
-    // console.log('Buckets:');
-    // buckets.forEach((bucket) => {
-    //   console.log(bucket.name);
-    // });
-  } catch (err) {
-    console.error('ERROR:', err);
-  }
-
-  // try {
-  //   const [files] = await storage.bucket(config.gcp.bucket).getFiles();
-
-  //   console.log('Files:');
-  //   files.forEach(file => {
-  //     console.log(file.name);
-  //   });
-  // } catch (error) {
-  //   console.error('ERROR:', error);
-  // }
-
-  // await storage.bucket(config.gcp.bucket).upload(filename, {
-  //   gzip: true,
-  //   metadata: {
-  //     cacheControl: 'public, max-age=31536000',
-  //   },
-  // });
-
-  // console.log(`${filename} uploaded to ${config.gcp.bucket}.`);
+  reply.send("Upload successful");
 }
 
 const s3 = new AWS.S3({

@@ -5,13 +5,13 @@ import * as uploadsController from "../controllers/upload";
 
 const uploadAvatarRoute: RouteOptions = {
 	method: "POST",
-	url: "/api/upload",
+	url: "/api/upload/s3",
 	handler: uploadsController.uploadAvatar,
 };
 
 const uploadGcsRoute: RouteOptions = {
 	method: "POST",
-	url: "/api/upload/gcp",
+	url: "/api/upload/gc",
 	handler: uploadsController.uploadGcs,
 };
 
