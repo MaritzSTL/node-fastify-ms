@@ -1,7 +1,62 @@
 import { FastifyRequest, FastifyReply } from "fastify";
+import path from "path";
 import { ServerResponse } from "http";
 import AWS from "aws-sdk";
+import { Storage } from "@google-cloud/storage";
 import { config } from "../config";
+import { createReadStream } from "fs";
+
+const storage = new Storage({
+  keyFilename: path.join(__dirname, '../../4d3e68bfea30.json'),
+  projectId: 'mms-sandbox'
+});
+const filename = path.join(__dirname, './file.txt');
+export const uploadGcs = async (req: FastifyRequest, reply: FastifyReply<ServerResponse>) => {
+  try {
+    // const file = (req.raw as any).files["file"];
+    const myBucket = storage.bucket(config.gcp.bucket);
+
+    await myBucket.file(filename).createWriteStream({
+      resumable: false,
+      gzip: true
+    })
+
+    // await new Promise(res, )
+
+    // console.log(myBucket)
+    // Makes an authenticated API request.
+    // const results = await storage.getBuckets();
+
+    // const [buckets] = results;
+
+    // console.log('Buckets:');
+    // buckets.forEach((bucket) => {
+    //   console.log(bucket.name);
+    // });
+  } catch (err) {
+    console.error('ERROR:', err);
+  }
+
+  // try {
+  //   const [files] = await storage.bucket(config.gcp.bucket).getFiles();
+
+  //   console.log('Files:');
+  //   files.forEach(file => {
+  //     console.log(file.name);
+  //   });
+  // } catch (error) {
+  //   console.error('ERROR:', error);
+  // }
+
+  // await storage.bucket(config.gcp.bucket).upload(filename, {
+  //   gzip: true,
+  //   metadata: {
+  //     cacheControl: 'public, max-age=31536000',
+  //   },
+  // });
+
+  // console.log(`${filename} uploaded to ${config.gcp.bucket}.`);
+}
 
 const s3 = new AWS.S3({
   accessKeyId: config.aws.accessKeyId,

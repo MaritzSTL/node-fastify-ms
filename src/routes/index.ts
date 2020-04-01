@@ -9,9 +9,15 @@ const uploadAvatarRoute: RouteOptions = {
 	handler: uploadsController.uploadAvatar,
 };
 
+const uploadGcsRoute: RouteOptions = {
+	method: "POST",
+	url: "/api/upload/gcp",
+	handler: uploadsController.uploadGcs,
+};
+
 const routes = [
 	...routesFor({ controller: quotesController, namespace: "api", resourceNamePlural: "quotes" }),
-	uploadAvatarRoute,
+	uploadAvatarRoute, uploadGcsRoute
 ];
 
 export default routes;
